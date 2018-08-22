@@ -7,19 +7,45 @@
 //Custom Functions
 void uptime(void);
 void getSystemInfo(void);
+void addStudents(int ID, int age, char* name);
+void list(void);
 
-//struct Student {
-//int ID;
-//char name[];
-//int age;
-//};
+typedef struct student {
+int ID;
+int age;
+char* name;
+};
 
+int a = 0;
+struct student studArray[3];
+
+
+void addStudents(int ID, int age, char* name) {
+	studArray[a].ID =ID;
+	studArray[a].age =age;
+	studArray[a].name = name;
+	a = a+1;
+}
+
+void list(void){
+	int i;
+	printk("Student Array: => \n");
+	for(i =0; i<a; i++){
+		printk("Name: %s\n", studArray[i].name);
+		printk("ID: %i\n", studArray[i].ID);
+		printk("Age: %i\n\n", studArray[i].age);
+	}
+}
 /* This function is called when the module is loaded. */
 int simple_init(void)
 {
        printk(KERN_INFO "Loading Arooniis Module\n");
 	uptime();
 	getSystemInfo();
+	addStudents(142,23,"Arun");
+	addStudents(153,30,"Peter");
+	addStudents(203,15,"Alex");
+	list();
        return 0;
 }
 	
