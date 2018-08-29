@@ -3,7 +3,7 @@
 #include <linux/kernel.h>
 #include <linux/jiffies.h>
 #include <linux/utsname.h>
-
+#define ARRSIZE 3
 //Custom Functions
 void uptime(void);
 void getSystemInfo(void);
@@ -17,7 +17,7 @@ char* name;
 };
 
 int a = 0;
-struct student studArray[3];
+struct student studArray[ARRSIZE];
 
 
 void addStudents(int ID, int age, char* name) {
