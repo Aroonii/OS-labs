@@ -11,6 +11,8 @@
 
 
 #define MAX_LINE		80 /* 80 chars per line, per command */
+void ChildProcess(void);           /* child process prototype*/
+
 
 int main(void)
 {
@@ -22,6 +24,14 @@ int main(void)
     while (should_run){   
         printf("osh>");
         fflush(stdout);
+	
+	pid_t pid;
+	pid = fork();
+	if(pid ==0) 
+	{ 
+		ChildProcess();
+	}
+
         
         /**
          * After reading user input, the steps are:
@@ -33,3 +43,16 @@ int main(void)
     
 	return 0;
 }
+
+void ChildProcess(void)
+{
+	int i;
+	for(i=1; i<= MAX_LINE; i++) {
+		printf("    This line is from child, value = %d\n", i);
+	printf("   ***Child process is done ***\n");
+	}
+
+}
+
+
+
