@@ -27,6 +27,8 @@ int main(void)
 	
 	pid_t pid;
 	pid = fork();
+
+	//execvp(args[0], args);
 	if(pid ==0) 
 	{ 
 		ChildProcess();
@@ -47,6 +49,7 @@ int main(void)
 void ChildProcess(void)
 {
 	int i;
+	//execvp(args[0], args);
 	for(i=1; i<= MAX_LINE; i++) {
 		printf("    This line is from child, value = %d\n", i);
 	printf("   ***Child process is done ***\n");
