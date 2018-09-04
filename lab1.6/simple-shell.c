@@ -1,3 +1,6 @@
+
+
+
 /**
  * Simple shell interface program.
  *
@@ -7,11 +10,12 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 
 
 #define MAX_LINE		80 /* 80 chars per line, per command */
-void ChildProcess(void);           /* child process prototype*/
+void ChildProcess(char word[]);           /* child process prototype*/
 
 
 int main(void)
@@ -20,19 +24,48 @@ int main(void)
     int should_run = 1;
 	
 	int i, upper;
-		
+	char word[MAX_LINE];
+	char s[MAX_LINE];
+	int ln;
+	
     while (should_run){   
         printf("osh>");
         fflush(stdout);
 	
+	 fgets(s, MAX_LINE, stdin);
+	  int ln =strlen(s);
+	  int i;
+	  int p;
+	  char c;
+	for(i=0; i<=ln;i++) {
+		c = s[i];
+		if(c == ' ') {
+			for(p=0; p<i;p++) {
+				word[p] = s[p];
+			}
+		}else {
+			for(p=0; p<=ln; p++) {
+				word[p] =s[p];
+			}
+		}
+	}
+	    
 	pid_t pid;
 	pid = fork();
 
-	//execvp(args[0], args);
-	if(pid ==0) 
-	{ 
-		ChildProcess();
-	}
+	
+	if(pid <0) {
+		perror("fork() error");
+		exit(-1);
+	if(pid !=0) {
+		printf("i'm the parent %d, my child is %d\n", getpid(), pid);
+		c = word[ln-1];
+		if(c!="&") {
+			wait(NULL);
+		} else {
+			ChildProcess(word);
+		}
+				
 
         
         /**
@@ -47,13 +80,12 @@ int main(void)
 }
 
 void ChildProcess(void)
-{
-	int i;
-	//execvp(args[0], args);
-	for(i=1; i<= MAX_LINE; i++) {
-		printf("    This line is from child, value = %d\n", i);
-	printf("   ***Child process is done ***\n");
+{	
+	if(word =="exit") {
+		exit(0);
 	}
+	printf("i'm the child%d, py parent is %d\n", getpid(), getppid());
+	execl("bin/echo","echo", word, NULL);
 
 }
 
