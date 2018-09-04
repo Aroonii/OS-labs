@@ -91,8 +91,9 @@ void ChildProcess(char word[])
 		exit(0);
 	}
 	printf("i'm the child %d, my parent is %d\n", getpid(), getppid());
-	execl("/bin/echo", "echo", word, NULL);
-	execl("/bin", word, NULL);
+	//execl("/bin/echo", "echo", word, NULL);
+	//execl("/bin", word, NULL);
+	execvp("/bin", word);
 
 	
 }
